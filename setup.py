@@ -447,6 +447,7 @@ def build_v8():
 def prepare_v8():
     if V8_SKIP_BUILD:
         print("INFO: Skipping build of v8 since V8_SKIP_BUILD parameter is set to true")
+        return
 
     try:
         checkout_v8()
