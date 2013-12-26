@@ -69,6 +69,7 @@ except ImportError:
     pass
 
 # override defaults from environment
+V8_SKIP_BUILD = os.environ.get('V8_SKIP_BUILD', False)
 PYV8_HOME = os.environ.get('PYV8_HOME', PYV8_HOME)
 BOOST_HOME = os.environ.get('BOOST_HOME', BOOST_HOME)
 BOOST_MT = os.environ.get('BOOST_MT', BOOST_MT)
@@ -79,6 +80,9 @@ INCLUDE = os.environ.get('INCLUDE', INCLUDE)
 LIB = os.environ.get('LIB', LIB)
 DEBUG = os.environ.get('DEBUG', DEBUG)
 MAKE = os.environ.get('MAKE', MAKE)
+
+if V8_SKIP_BUILD == 'true':
+    V8_SKIP_BUILD = True
 
 if type(DEBUG) == str:
     DEBUG = DEBUG.lower() in ['true', 'on', 't']
@@ -441,6 +445,9 @@ def build_v8():
 
 
 def prepare_v8():
+    if V8_SKIP_BUILD:
+        print("INFO: Skipping build of v8 since V8_SKIP_BUILD parameter is set to true")
+
     try:
         checkout_v8()
         prepare_gyp()
